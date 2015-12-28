@@ -18,8 +18,12 @@ public class Cell {
 
   public void fix(int n) {
     if (n <= 0 || 10 <= n) return;
-    left_bit = ~1 << n - 1 & ALL;
+    left_bit = 1 << n - 1;
     fix_number = n;
+  }
+
+  public void delete(int bit){
+    left_bit &= ~bit;
   }
 
   public void clear(){

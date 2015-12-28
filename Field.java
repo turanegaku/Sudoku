@@ -18,7 +18,7 @@ public class Field {
       for (int i = 0; i < 9; i++) {
         group[0 * 9 + idx][i] = cell[idx][i]; // horizontal
         group[1 * 9 + idx][i] = cell[i][idx]; // vertical
-        group[1 * 9 + idx][i] = cell[idx / 3 * 3 + i / 3][idx % 3 * 3 + i % 3]; // box
+        group[2 * 9 + idx][i] = cell[idx / 3 * 3 + i / 3][idx % 3 * 3 + i % 3]; // box
       }
     }
   }
