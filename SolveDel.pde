@@ -19,12 +19,12 @@ public class P {
   }
 }
 
-public class Solve implements Runnable {
+public class SolveDel implements Runnable {
   private boolean running;
   private List<P> list;
   private int cnt;
 
-  public Solve() {
+  public SolveDel() {
     list = new ArrayList<P>();
   }
   public int getSize() {

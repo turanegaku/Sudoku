@@ -1,6 +1,6 @@
 final int CELL_SIZE = 50;
 
-Solve solve;
+SolveDel solve;
 SolveAll solveAll;
 Dialog dialog;
 Field field;
@@ -14,7 +14,7 @@ void settings(){
 
 void setup() {
   sx = sy = 0;
-  solve = new Solve();
+  solve = new SolveDel();
   solveAll = new SolveAll();
   dialog = new Dialog(width / 2, height - 10);
   field = new Field();
@@ -44,7 +44,7 @@ void draw() {
         textFont(f2);
         for (int i = 0; i < 9; i++) {
           fill(field.isLeft(x, y, i + 1) ? 0 : #bbbbff);
-          text(i + 1, CELL_SIZE * x + CELL_SIZE / 3 * (i % 3) + CELL_SIZE / 5, CELL_SIZE * y + CELL_SIZE / 3 * (i / 3) + CELL_SIZE / 4);
+          text(i + 1, CELL_SIZE * x + CELL_SIZE / 3 * (i % 3) + CELL_SIZE / 5, CELL_SIZE * y + CELL_SIZE / 3 * (2 - i / 3) + CELL_SIZE / 4);
         }
       }
     }
@@ -223,7 +223,11 @@ public void keyPressed(KeyEvent e) {
     return;
   }
   if ('0' <= code && code <= '9') {
-    field.fix(sx, sy, code - '0');
+    if (e.isShiftDown()) {
+      field.toggle(sx, sy, code - '0');
+    }else{
+      field.fix(sx, sy, code - '0');
+    }
     //    solve.start();
     return;
   }

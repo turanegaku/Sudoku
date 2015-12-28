@@ -35,6 +35,10 @@ public class Field {
     return (cell[y][x].left_bit & (1 << n - 1)) != 0;
   }
 
+  public void toggle(int x, int y, int n){
+    cell[y][x].toggle(n);
+  }
+
   public void fix(int x, int y, int n){
     cell[y][x].fix(n);
   }
