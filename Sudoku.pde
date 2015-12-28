@@ -43,7 +43,7 @@ void draw() {
       else {
         textFont(f2);
         for (int i = 0; i < 9; i++) {
-          fill(field.isLeft(x, y, i + 1)?0:#bbbbff);
+          fill(field.isLeft(x, y, i + 1) ? 0 : #bbbbff);
           text(i + 1, CELL_SIZE * x + CELL_SIZE / 3 * (i % 3) + CELL_SIZE / 5, CELL_SIZE * y + CELL_SIZE / 3 * (i / 3) + CELL_SIZE / 4);
         }
       }
@@ -93,143 +93,137 @@ public void keyPressed(KeyEvent e) {
   }
   if (code == DELETE) {
     solve.stop();
-    for (int i = 0; i < 9 * 9; i++) cell[i / 9][i % 9] = new Cell();
+    field.clearAll();
     return;
   }
   if (code == BACKSPACE) {
-    cell[sx][sy] = new Cell();
+    field.clear(sx, sy);
     return;
   }
   if (code == 'C' && !solve.running) {
     solve.check();
     return;
   }
-  if (code == 'S') {
-    for (int y = 0; y < 9; y++)
-      for (int x = 0; x < 9; x++)
-        if (cell[x][y].isDef())
-          println("cell[" + x + "][" + y + "].def(" + cell[x][y].getNumber() + ");");
-  }
   if (code == 'Q') {
-    for (int i = 0; i < 9 * 9; i++) cell[i / 9][i % 9] = new Cell();
-    cell[1][0].def(3);
-    cell[6][0].def(8);
-    cell[0][1].def(9);
-    cell[7][1].def(3);
-    cell[2][2].def(8);
-    cell[8][2].def(7);
-    cell[2][3].def(7);
-    cell[0][4].def(1);
-    cell[4][4].def(8);
-    cell[7][4].def(2);
-    cell[4][5].def(4);
-    cell[5][5].def(3);
-    cell[6][5].def(6);
-    cell[8][5].def(9);
-    cell[0][6].def(7);
-    cell[2][6].def(1);
-    cell[3][6].def(9);
-    cell[3][7].def(7);
-    cell[4][7].def(5);
-    cell[7][7].def(4);
-    cell[1][8].def(4);
-    cell[4][8].def(1);
-    cell[7][8].def(9);
-    cell[8][8].def(2);
+    field.clearAll();
+    field.fix(1, 0, 3);
+    field.fix(6, 0, 8);
+    field.fix(0, 1, 9);
+    field.fix(7, 1, 3);
+    field.fix(2, 2, 8);
+    field.fix(8, 2, 7);
+    field.fix(2, 3, 7);
+    field.fix(0, 4, 1);
+    field.fix(4, 4, 8);
+    field.fix(7, 4, 2);
+    field.fix(4, 5, 4);
+    field.fix(5, 5, 3);
+    field.fix(6, 5, 6);
+    field.fix(8, 5, 9);
+    field.fix(0, 6, 7);
+    field.fix(2, 6, 1);
+    field.fix(3, 6, 9);
+    field.fix(3, 7, 7);
+    field.fix(4, 7, 5);
+    field.fix(7, 7, 4);
+    field.fix(1, 8, 4);
+    field.fix(4, 8, 1);
+    field.fix(7, 8, 9);
+    field.fix(8, 8, 2);
     return;
   }
   if (code == 'W') {
-    for (int i = 0; i < 9 * 9; i++) cell[i / 9][i % 9] = new Cell();
-    cell[1][0].def(9);
-    cell[2][0].def(1);
-    cell[4][0].def(2);
-    cell[6][1].def(7);
-    cell[8][1].def(6);
-    cell[7][3].def(9);
-    cell[0][4].def(6);
-    cell[0][5].def(7);
-    cell[2][5].def(5);
-    cell[3][5].def(6);
-    cell[0][6].def(8);
-    cell[8][6].def(3);
-    cell[4][7].def(9);
-    cell[5][7].def(4);
-    cell[7][7].def(2);
-    cell[2][8].def(7);
-    cell[4][8].def(1);
+    field.clearAll();
+    field.fix(1, 0, 9);
+    field.fix(2, 0, 1);
+    field.fix(4, 0, 2);
+    field.fix(6, 1, 7);
+    field.fix(8, 1, 6);
+    field.fix(7, 3, 9);
+    field.fix(0, 4, 6);
+    field.fix(0, 5, 7);
+    field.fix(2, 5, 5);
+    field.fix(3, 5, 6);
+    field.fix(0, 6, 8);
+    field.fix(8, 6, 3);
+    field.fix(4, 7, 9);
+    field.fix(5, 7, 4);
+    field.fix(7, 7, 2);
+    field.fix(2, 8, 7);
+    field.fix(4, 8, 1);
     return;
   }
   if (code == 'E') {
-    for (int i = 0; i < 9 * 9; i++) cell[i / 9][i % 9] = new Cell();
-    cell[0][0].def(9);
-    cell[6][0].def(5);
-    cell[8][0].def(4);
-    cell[1][1].def(5);
-    cell[4][2].def(8);
-    cell[5][2].def(1);
-    cell[0][4].def(2);
-    cell[3][4].def(4);
-    cell[4][4].def(5);
-    cell[2][5].def(7);
-    cell[7][5].def(8);
-    cell[0][6].def(7);
-    cell[4][6].def(9);
-    cell[1][7].def(8);
-    cell[7][7].def(1);
-    cell[3][8].def(2);
-    cell[6][8].def(3);
+    field.clearAll();
+    field.fix(0, 0, 9);
+    field.fix(6, 0, 5);
+    field.fix(8, 0, 4);
+    field.fix(1, 1, 5);
+    field.fix(4, 2, 8);
+    field.fix(5, 2, 1);
+    field.fix(0, 4, 2);
+    field.fix(3, 4, 4);
+    field.fix(4, 4, 5);
+    field.fix(2, 5, 7);
+    field.fix(7, 5, 8);
+    field.fix(0, 6, 7);
+    field.fix(4, 6, 9);
+    field.fix(1, 7, 8);
+    field.fix(7, 7, 1);
+    field.fix(3, 8, 2);
+    field.fix(6, 8, 3);
     return;
   }
   if (code == 'R') {
-    for (int i = 0; i < 9 * 9; i++) cell[i / 9][i % 9] = new Cell();
-    cell[0][0].def(1);
-    cell[1][0].def(9);
-    cell[8][0].def(4);
-    cell[4][1].def(7);
-    cell[5][1].def(1);
-    cell[7][1].def(2);
-    cell[8][1].def(8);
-    cell[1][2].def(8);
-    cell[2][2].def(2);
-    cell[5][2].def(3);
-    cell[6][2].def(5);
-    cell[2][3].def(9);
-    cell[3][3].def(6);
-    cell[4][3].def(4);
-    cell[6][3].def(1);
-    cell[7][3].def(8);
-    cell[0][4].def(5);
-    cell[2][4].def(7);
-    cell[3][4].def(1);
-    cell[4][4].def(3);
-    cell[8][4].def(9);
-    cell[0][5].def(6);
-    cell[2][5].def(8);
-    cell[3][5].def(2);
-    cell[7][5].def(5);
-    cell[0][6].def(9);
-    cell[1][6].def(3);
-    cell[2][6].def(6);
-    cell[4][6].def(8);
-    cell[5][6].def(4);
-    cell[6][6].def(7);
-    cell[0][7].def(2);
-    cell[1][7].def(5);
-    cell[2][7].def(4);
-    cell[4][7].def(1);
-    cell[5][7].def(9);
-    cell[6][7].def(8);
-    cell[7][7].def(3);
-    cell[1][8].def(7);
-    cell[3][8].def(3);
-    cell[4][8].def(2);
-    cell[5][8].def(6);
-    cell[7][8].def(4);
-    cell[8][8].def(5);
+    field.clearAll();
+    field.fix(0, 0, 1);
+    field.fix(1, 0, 9);
+    field.fix(8, 0, 4);
+    field.fix(4, 1, 7);
+    field.fix(5, 1, 1);
+    field.fix(7, 1, 2);
+    field.fix(8, 1, 8);
+    field.fix(1, 2, 8);
+    field.fix(2, 2, 2);
+    field.fix(5, 2, 3);
+    field.fix(6, 2, 5);
+    field.fix(2, 3, 9);
+    field.fix(3, 3, 6);
+    field.fix(4, 3, 4);
+    field.fix(6, 3, 1);
+    field.fix(7, 3, 8);
+    field.fix(0, 4, 5);
+    field.fix(2, 4, 7);
+    field.fix(3, 4, 1);
+    field.fix(4, 4, 3);
+    field.fix(8, 4, 9);
+    field.fix(0, 5, 6);
+    field.fix(2, 5, 8);
+    field.fix(3, 5, 2);
+    field.fix(7, 5, 5);
+    field.fix(0, 6, 9);
+    field.fix(1, 6, 3);
+    field.fix(2, 6, 6);
+    field.fix(4, 6, 8);
+    field.fix(5, 6, 4);
+    field.fix(6, 6, 7);
+    field.fix(0, 7, 2);
+    field.fix(1, 7, 5);
+    field.fix(2, 7, 4);
+    field.fix(4, 7, 1);
+    field.fix(5, 7, 9);
+    field.fix(6, 7, 8);
+    field.fix(7, 7, 3);
+    field.fix(1, 8, 7);
+    field.fix(3, 8, 3);
+    field.fix(4, 8, 2);
+    field.fix(5, 8, 6);
+    field.fix(7, 8, 4);
+    field.fix(8, 8, 5);
     return;
   }
   if ('0' <= code && code <= '9') {
-    cell[sx][sy].def(code - '0');
+    field.fix(sx, sy, code - '0');
     //    solve.start();
     return;
   }

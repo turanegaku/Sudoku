@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Map;
@@ -32,11 +33,12 @@ public class Solve implements Runnable {
 
   public void run() {
     running = true;
-    for (int i = 0; i < 9 * 9; i++)
-      if (cell[i / 9][i % 9].isDef())
+    /*
+       for (int i = 0; i < 9 * 9; i++)
+       if (cell[i / 9][i % 9].isDef())
         list.add(new P(i / 9, i % 9, cell[i / 9][i % 9].getNumber()));
-    while (list.size () > 0) {
-      while (list.size () > 0) {
+       while (list.size () > 0) {
+       while (list.size () > 0) {
         cnt++;
         P p = list.remove(0);
         for (int i = 0; i < 9; i++) {//Delete Define Number
@@ -48,8 +50,8 @@ public class Solve implements Runnable {
             list.add(new P(p.x / 3 * 3 + i / 3, p.y / 3 * 3 + i % 3, cell[p.x / 3 * 3 + i / 3][p.y / 3 * 3 + i % 3].getNumber()));
           wait_(1);
         }
-      }
-      if (cnt < 81) {//Define Only Number
+       }
+       if (cnt < 81) {//Define Only Number
         for (int n = 1; n <= 9; n++)
           for (int i = 0; i < 9; i++) {
             List<List<P>>l = new ArrayList<List<P>>();
@@ -71,30 +73,32 @@ public class Solve implements Runnable {
                 wait_(1);
               }
           }
-      }
-    }
-    int n = check();
-    switch(n) {
-    case 0:
-      dialog.show("Correct");
-      break;
-    case -1:
-      dialog.show("Not Finish");
-      break;
-    default:
-      if (0 < n && n < 10)
+       }
+       }
+       int n = check();
+       switch(n) {
+       case 0:
+       dialog.show("Correct");
+       break;
+       case -1:
+       dialog.show("Not Finish");
+       break;
+       default:
+       if (0 < n && n < 10)
         dialog.show("Incorrect :" + n);
-      break;
-    }
+       break;
+       }
+     */
     running = false;
   }
 
   public int check() {
     int t = 0;
-    for (int i = 0; i < 9; i++) {
-      List<Set<Integer>>l = new ArrayList<Set<Integer>>();
-      for (int k = 0; k < 3; k++) l.add(new HashSet<Integer>());
-      for (int j = 0; j < 9; j++) {
+    /*
+       for (int i = 0; i < 9; i++) {
+       List<Set<Integer>>l = new ArrayList<Set<Integer>>();
+       for (int k = 0; k < 3; k++) l.add(new HashSet<Integer>());
+       for (int j = 0; j < 9; j++) {
         if (cell[i][j].isDef()) {
           if (!l.get(0).contains(cell[i][j].getNumber()))
             l.get(0).add(cell[i][j].getNumber());
@@ -117,8 +121,9 @@ public class Solve implements Runnable {
         }
         else
           t = -1;
-      }
-    }
+       }
+       }
+     */
     return t;
   }
 
@@ -148,22 +153,24 @@ public class SolveAll implements Runnable {
   private int cnt;
 
   public boolean allPlayAll(int loc) {
-    int x = loc % 9;
-    int y = loc / 9;
-    if (loc == 9 * 9)
-      return check() == 0;
-    if (!cell[x][y].isDef()) {
-      Integer[] num = cell[x][y].getNumbers();
-      for (int n : num) {
+    /*
+       int x = loc % 9;
+       int y = loc / 9;
+       if (loc == 9 * 9)
+       return check() == 0;
+       if (!cell[x][y].isDef()) {
+       Integer[] num = cell[x][y].getNumbers();
+       for (int n : num) {
         cell[x][y].def(n);
         if (allPlayAll(loc + 1))
           return true;
-      }
-      cell[x][y].clear();
-      cell[x][y].addAll(num);
-    }
-    else
-      return allPlayAll(loc + 1);
+       }
+       cell[x][y].clear();
+       cell[x][y].addAll(num);
+       }
+       else
+       return allPlayAll(loc + 1);
+     */
     return false;
   }
 
@@ -179,6 +186,7 @@ public class SolveAll implements Runnable {
   }
 
   public void start() {
+    /*
     if (running)
       running = false;
     else {
@@ -188,6 +196,7 @@ public class SolveAll implements Runnable {
           cnt++;
       new Thread(this).start();
     }
+    */
   }
 
   public void stop() {
