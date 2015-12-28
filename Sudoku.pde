@@ -1,7 +1,7 @@
 final int CELL_SIZE = 50;
 
-SolveDel solve;
-SolveAll solveAll;
+Solve delete;
+SolveAll all;
 Dialog dialog;
 Field field;
 PFont f1, f2;
@@ -14,8 +14,8 @@ void settings(){
 
 void setup() {
   sx = sy = 0;
-  solve = new SolveDel();
-  solveAll = new SolveAll();
+  delete = new SolveDelete();
+  all = new SolveAll();
   dialog = new Dialog(width / 2, height - 10);
   field = new Field();
   f1 = createFont("ComicSansMS", 25);
@@ -57,8 +57,8 @@ void draw() {
 
   fill(0);
   textFont(f1);
-  if (solve.running)
-    text("solving :" + nf(solve.getSize(), 2, 0), width / 2, height - 10);
+  // if (solve.running)
+  //   text("solving :" + nf(solve.getSize(), 2, 0), width / 2, height - 10);
   dialog.draw();
 }
 
@@ -67,7 +67,7 @@ public void mousePressed(MouseEvent e) {
   int ny = mouseY / CELL_SIZE;
   if (ny >= 9) {
     sx = sy = -1;
-    solve.start();
+    delete.solve(field);
     return;
   }
   if (sx == nx && sy == ny)
@@ -86,13 +86,13 @@ public void keyPressed(KeyEvent e) {
   }
   if (code == ENTER) {
     if (e.isControlDown())
-      solveAll.start();
+      all.solve(field);
     else
-      solve.start();
+      delete.solve(field);
     return;
   }
   if (code == DELETE) {
-    solve.stop();
+    // solve.stop();
     field.clearAll();
     return;
   }
@@ -100,10 +100,10 @@ public void keyPressed(KeyEvent e) {
     field.clear(sx, sy);
     return;
   }
-  if (code == 'C' && !solve.running) {
-    solve.check();
-    return;
-  }
+  // if (code == 'C' && !solve.running) {
+  //   solve.check();
+  //   return;
+  // }
   if (code == 'Q') {
     field.clearAll();
     field.fix(1, 0, 3);

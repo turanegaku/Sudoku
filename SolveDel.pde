@@ -148,7 +148,7 @@ public class SolveDel implements Runnable {
   }
 }
 
-public class SolveAll implements Runnable {
+public class SolveAll_ implements Runnable {
   private boolean running;
   private int cnt;
 
@@ -182,7 +182,8 @@ public class SolveAll implements Runnable {
   }
 
   public int check() {
-    return solve.check();
+    return 0;
+    // return solve.check();
   }
 
   public void start() {

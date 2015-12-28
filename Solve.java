@@ -1,3 +1,9 @@
 public abstract class Solve implements Runnable {
-  public abstract void solve(Field field);
+  Field field;
+  public void solve(Field field){
+    this.field = field;
+    new Thread(this).start();
+  }
+
+  public abstract void run();
 }
