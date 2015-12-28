@@ -1,7 +1,9 @@
+final int CELL_SIZE = 50;
+
 Solve solve;
 SolveAll solveAll;
 Dialog dialog;
-Cell cell[][];
+Field field;
 PFont f1, f2;
 String name;
 int sx, sy;
@@ -15,8 +17,7 @@ void setup() {
   solve = new Solve();
   solveAll = new SolveAll();
   dialog = new Dialog(width / 2, height - 10);
-  cell = new Cell[9][9];
-  for (int i = 0; i < 9 * 9; i++) cell[i / 9][i % 9] = new Cell();
+  field = new Field();
   f1 = createFont("ComicSansMS", 25);
   f2 = createFont("ComicSansMS", 10);
 
@@ -35,17 +36,16 @@ void draw() {
       fill(sx == x && sy == y ? #ccccff : #ffffff);
       rect(CELL_SIZE * x, CELL_SIZE * y, CELL_SIZE, CELL_SIZE);
       fill(0);
-      Integer[] l = cell[x][y].getNumbers();
-      if (l.length == 1) {
+      if (field.isFix(x, y)) {
         textFont(f1);
-        if (l[0] != null)
-          text(l[0], CELL_SIZE * x + CELL_SIZE / 2, CELL_SIZE * y + CELL_SIZE * 3 / 4);
+        text(field.getNumber(x, y), CELL_SIZE * x + CELL_SIZE / 2, CELL_SIZE * y + CELL_SIZE * 3 / 4);
       }
       else {
         textFont(f2);
-        for (int i = 0; i < l.length; i++)
-          if (l[i] != null)
-            text(l[i], CELL_SIZE * x + CELL_SIZE / 3 * (i % 3) + CELL_SIZE / 5, CELL_SIZE * y + CELL_SIZE / 3 * (i / 3) + CELL_SIZE / 4);
+        for (int i = 0; i < 9; i++) {
+          fill(field.isLeft(x, y, i + 1)?0:#bbbbff);
+          text(i + 1, CELL_SIZE * x + CELL_SIZE / 3 * (i % 3) + CELL_SIZE / 5, CELL_SIZE * y + CELL_SIZE / 3 * (i / 3) + CELL_SIZE / 4);
+        }
       }
     }
   }
