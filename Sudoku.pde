@@ -35,6 +35,10 @@ void draw() {
     for (int x = 0; x < 9; x++) {
       fill(sx == x && sy == y ? #ccccff : #ffffff);
       rect(CELL_SIZE * x, CELL_SIZE * y, CELL_SIZE, CELL_SIZE);
+      if (field.isError(x, y)){
+      fill(#ffaaaa, 100);
+      rect(CELL_SIZE * x, CELL_SIZE * y, CELL_SIZE, CELL_SIZE);
+      }
       fill(0);
       if (field.isFix(x, y)) {
         textFont(f1);

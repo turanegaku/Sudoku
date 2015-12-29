@@ -49,5 +49,7 @@ public class SolveDelete extends Solve {
       }
       check.clear();
     }
+
+    field.check();
   }
 }

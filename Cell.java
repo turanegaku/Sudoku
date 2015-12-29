@@ -1,8 +1,8 @@
 import java.util.List;
 
 public class Cell {
-  private static final int ALL = (1 << 9) - 1;
-  private static final int NONE = 0;
+  public static final int ALL = (1 << 9) - 1;
+  public static final int NONE = 0;
 
   public int left_bit;
   public int fix_number;
