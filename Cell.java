@@ -1,7 +1,7 @@
 import java.util.List;
 
 public class Cell {
-  private static final int ALL = (1 << 10) - 1;
+  private static final int ALL = (1 << 9) - 1;
   private static final int NONE = 0;
 
   public int left_bit;
@@ -10,6 +10,19 @@ public class Cell {
   public Cell() {
     left_bit = ALL;
     fix_number = NONE;
+  }
+
+  private void fixCheck(){
+    if (Integer.bitCount(left_bit) == 1) {
+      for(int i = 0; i < 9; i++) {
+        if((left_bit & (1 << i)) != 0) {
+          fix_number = i + 1;
+          break;
+        }
+      }
+    }else{
+      fix_number = 0;
+    }
   }
 
   public boolean isFix(){
@@ -22,18 +35,25 @@ public class Cell {
     fix_number = n;
   }
 
-  public void delete(int bit){
-    left_bit &= ~bit;
-  }
-
   public void clear(){
     left_bit = ALL;
     fix_number = NONE;
   }
 
+  public void delete(int bit){
+    left_bit &= ~bit;
+    fixCheck();
+  }
+
+  public void setBit(int bit){
+    left_bit = bit;
+    fixCheck();
+  }
+
   public void toggle(int n){
     if (n <= 0 || 10 <= n) return;
     left_bit ^= 1 << n - 1;
+    fixCheck();
   }
 
 }

@@ -3,7 +3,7 @@ import java.util.List;
 
 public class Field {
   private Cell[][] cell;
-  private Cell[][] group;
+  private int [][] group;
 
   public Field(){
     cell = new Cell[9][9];
@@ -13,26 +13,40 @@ public class Field {
       }
     }
 
-    group = new Cell[9 * 3][9];
-    for (int idx = 0; idx < 9; idx++) {
-      for (int i = 0; i < 9; i++) {
-        group[0 * 9 + idx][i] = cell[idx][i]; // horizontal
-        group[1 * 9 + idx][i] = cell[i][idx]; // vertical
-        group[2 * 9 + idx][i] = cell[idx / 3 * 3 + i / 3][idx % 3 * 3 + i % 3]; // box
-      }
-    }
+    group = new int[3][9];
   }
 
   public boolean isFix(int x, int y){
     return cell[y][x].isFix();
   }
 
+  public int getBit(int x, int y){
+    return cell[y][x].left_bit;
+  }
+
+  public void setBit(int x, int y, int bit){
+    cell[y][x].setBit(bit);
+  }
+
   public int getNumber(int x, int y){
     return cell[y][x].fix_number;
   }
 
+  public int[][] getGroup(int x, int y){
+    for (int i = 0; i < 9; i++) {
+      group[0][i] = (y << 4) + i;   // horizontal
+      group[1][i] = (i << 4) + x;   // vertical
+      group[2][i] = (y / 3 * 3 + i / 3 << 4) + x / 3 * 3 + i % 3; //box
+    }
+    return group;
+  }
+
   public boolean isLeft(int x, int y, int n){
     return (cell[y][x].left_bit & (1 << n - 1)) != 0;
+  }
+
+  public void delete(int sx, int sy, int dx, int dy){
+    cell[sy][sx].delete(cell[dy][dx].left_bit);
   }
 
   public void toggle(int x, int y, int n){
