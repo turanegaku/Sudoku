@@ -32,17 +32,18 @@ public class Field {
     return cell[y][x].fix_number;
   }
 
-  public int[][] getGroup(int x, int y){
-    for (int i = 0; i < 9; i++) {
-      group[0][i] = (y << 4) + i;   // horizontal
-      group[1][i] = (i << 4) + x;   // vertical
-      group[2][i] = (y / 3 * 3 + i / 3 << 4) + x / 3 * 3 + i % 3; //box
-    }
-    return group;
-  }
-
   public boolean isLeft(int x, int y, int n){
     return (cell[y][x].left_bit & (1 << n - 1)) != 0;
+  }
+
+  public void check(){
+    // horizontal
+    for (int idx = 0; idx < 9; idx++) {
+      int bit = Cell.ALL;
+      for (int x = 0; x < 9; x++) {
+        bit &= cell[idx][x].left_bit;
+      }
+    }
   }
 
   public void delete(int sx, int sy, int dx, int dy){

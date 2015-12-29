@@ -19,12 +19,13 @@ public class SolveDelete extends Solve {
       for(int p : delete) {
         int x = p & 0xf, y = p >> 4;
         used[y][x] = true;
-        int[][] groups = field.getGroup(x, y);
+        int[][] groups = getGroup(x, y);
         for(int[] group : groups) {
           for(int q : group) {
-            if (p == q) continue;
             int sx = q & 0xf, sy = q >> 4;
-            field.delete(sx, sy, x, y);
+            if (used[sy][sx]) continue;
+            if (!field.isFix(sx, sy))
+              field.delete(sx, sy, x, y);
             check.add(q);
           }
         }
@@ -32,10 +33,9 @@ public class SolveDelete extends Solve {
       delete.clear();
       for(int p : check) {
         int x = p & 0xf, y = p >> 4;
-        // field.delete(x, y);
-        int[][] groups = field.getGroup(x, y);
+        int[][] groups = getGroup(x, y);
         for(int[] group : groups) {
-          int bit = ~0;
+          int bit = Cell.ALL;
           for(int q : group) {
             int sx = q & 0xf, sy = q >> 4;
             int b = field.getBit(sx, sy);
