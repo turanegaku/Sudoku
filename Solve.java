@@ -1,9 +1,14 @@
 public abstract class Solve implements Runnable {
-  Field field;
+  protected Field field;
+  private Logger logger;
   private int [][] group = new int[3][9];
-  public void solve(Field field){
+  private boolean running;
+
+  public void solve(Field field, Logger logger){
     this.field = field;
-    new Thread(this).start();
+    this.logger = logger;
+    if (!running)
+      new Thread(this).start();
   }
 
   protected int[][] getGroup(int x, int y){
@@ -15,5 +20,12 @@ public abstract class Solve implements Runnable {
     return group;
   }
 
-  public abstract void run();
+  protected abstract void works();
+
+  public void run(){
+    running = true;
+    works();
+    logger.show(field.check() ? "Correct!" : "Incorrect.");
+    running = false;
+  }
 }

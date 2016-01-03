@@ -1,4 +1,4 @@
-public class Dialog {
+public class Dialog extends Logger {
   int x, y, t;
   String txt = "";
 
