@@ -47,6 +47,32 @@ public class Field {
     return (cell[y][x].left_bit & (1 << n - 1)) != 0;
   }
 
+  public boolean checkwithreturn(){
+    for(int idx = 0; idx < 9; idx++) {
+      for(int i = 0; i < 9 - 1; i++) {
+        for(int j = i + 1; j < 9; j++) {
+          if(isFix(i, idx) && isFix(j, idx))
+            if((getBit(i, idx) & getBit(j, idx)) != 0) {
+              return false;
+            }
+          if(isFix(idx, i) && isFix(idx, j))
+            if((getBit(idx, i) & getBit(idx, j)) != 0) {
+              return false;
+            }
+          int xi = idx % 3 * 3 + i % 3;
+          int yi = idx / 3 * 3 + i / 3;
+          int xj = idx % 3 * 3 + j % 3;
+          int yj = idx / 3 * 3 + j / 3;
+          if(isFix(xi, yi) && isFix(xj, yj))
+            if((getBit(xi, yi) & getBit(xj, yj)) != 0) {
+              return false;
+            }
+        }
+      }
+    }
+    return true;
+  }
+
   public void check(){
     for(int idx = 0; idx < 9; idx++) {
       for(int i = 0; i < 9 - 1; i++) {
