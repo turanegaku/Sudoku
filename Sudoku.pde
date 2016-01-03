@@ -70,7 +70,7 @@ public void mousePressed(MouseEvent e) {
   int ny = mouseY / CELL_SIZE;
   if (ny >= 9) {
     sx = sy = -1;
-    delete.solve(field, this);
+    all.solve(field, this);
     return;
   }
   if (sx == nx && sy == ny)
@@ -94,9 +94,9 @@ public void keyPressed(KeyEvent e) {
       }
     }
     if (e.isControlDown())
-      all.solve(field, this);
-    else
       delete.solve(field, this);
+    else
+      all.solve(field, this);
     return;
   }
   if (code == DELETE) {
