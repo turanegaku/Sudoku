@@ -100,7 +100,6 @@ public void keyPressed(KeyEvent e) {
     return;
   }
   if (code == DELETE) {
-    // solve.stop();
     field.clearAll();
     return;
   }
