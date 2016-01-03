@@ -15,6 +15,21 @@ public class Field {
     error = new boolean [9][9];
   }
 
+  public Field(String cellstr){
+    this();
+    setCellString(cellstr);
+  }
+
+  public void setCellString(String cellstr){
+    if (cellstr.length() != 81) return;
+    for (int y = 0; y < 9; y++) {
+      for (int x = 0; x < 9; x++) {
+        cell[y][x] = new Cell();
+        cell[y][x].fix(cellstr.charAt(y * 9 + x) - '0');
+      }
+    }
+  }
+
   public boolean isFix(int x, int y){
     return cell[y][x].isFix();
   }
