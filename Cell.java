@@ -13,16 +13,7 @@ public class Cell {
   }
 
   private void fixCheck(){
-    if (Integer.bitCount(left_bit) == 1) {
-      for(int i = 0; i < 9; i++) {
-        if((left_bit & (1 << i)) != 0) {
-          fix_number = i + 1;
-          break;
-        }
-      }
-    }else{
-      fix_number = 0;
-    }
+    fix_number = Integer.bitCount(left_bit) == 1 ? Integer.numberOfTrailingZeros(left_bit) + 1 : NONE;
   }
 
   public boolean isFix(){
