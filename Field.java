@@ -23,6 +23,10 @@ public class Field {
     return error[y][x];
   }
 
+  public void toError(int x, int y){
+    error[y][x] = true;
+  }
+
   public int getBit(int x, int y){
     return cell[y][x].left_bit;
   }
@@ -39,55 +43,47 @@ public class Field {
     return (cell[y][x].left_bit & (1 << n - 1)) != 0;
   }
 
-  private void checkError(int x, int y, int bit){
-    if(isFix(x, y) && (bit & getBit(x, y)) != 0)
-      error[y][x] = true;
-  }
-
   public void check(){
     for(int idx = 0; idx < 9; idx++) {
-      int h = Cell.NONE;
+      int ha = Cell.ALL;
+      int va = Cell.ALL;
+      int ba = Cell.ALL;
       int ho = Cell.NONE;
-      int v = Cell.NONE;
       int vo = Cell.NONE;
-      int b = Cell.NONE;
       int bo = Cell.NONE;
+      int hp = Cell.NONE;
+      int vp = Cell.NONE;
+      int bp = Cell.NONE;
       for(int i = 0; i < 9; i++) {
-        if (isFix(i, idx)) {
-          int bit = getBit(i, idx);
-          if ((ho & bit) != 0) {
-            h |= bit;
-          }
-          ho |= bit;
-        }
-        if (isFix(idx, i)) {
-          int bit = getBit(idx, i);
-          if ((vo & bit) != 0) {
-            v |= bit;
-          }
-          vo |= bit;
-        }
+        ho |= getBit(i, idx);
+        hp += getBit(i, idx);
+        ha &= getBit(i, idx);
+        vo |= getBit(idx, i);
+        vp += getBit(idx, i);
+        va &= getBit(idx, i);
         int x = idx % 3 * 3 + i % 3;
         int y = idx / 3 * 3 + i / 3;
-        if (isFix(x, y)) {
-          int bit = getBit(x, y);
-          if ((bo & bit) != 0) {
-            b |= bit;
-          }
-          bo |= bit;
+        bo |= getBit(x, y);
+        bp += getBit(x, y);
+        ba &= getBit(x, y);
+      }
+      if ( ho != Cell.ALL || hp != Cell.ALL || ha != Cell.NONE) {
+        int bit = Cell.NONE;
+        for(int i = 0; i < 9; i++) {
+          toError(i, idx);
         }
       }
-      for(int i = 0; i < 9; i++) {
-        checkError(i, idx, h);
-        checkError(idx, i, v);
-        checkError(idx % 3 * 3 + i % 3, idx / 3 * 3 + i / 3, b);
+      if ( vo != Cell.ALL || vp != Cell.ALL || va != Cell.NONE) {
+        for(int i = 0; i < 9; i++) {
+          toError(idx, i);
+        }
       }
-    }
-    // is all cell fixed
-    boolean fix = true;
-    for(int y = 0; y < 9; y++) {
-      for(int x = 0; x < 9; x++) {
-        fix &= isFix(x, y);
+      if ( bo != Cell.ALL || bp != Cell.ALL || ba != Cell.NONE) {
+        for(int i = 0; i < 9; i++) {
+          int x = idx % 3 * 3 + i % 3;
+          int y = idx / 3 * 3 + i / 3;
+          toError(x, y);
+        }
       }
     }
   }

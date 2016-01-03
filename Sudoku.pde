@@ -22,6 +22,7 @@ void setup() {
   f2 = createFont("ComicSansMS", 10);
 
   textAlign(CENTER);
+  frameRate(10);
 }
 
 public void saverequest(String nam) {
