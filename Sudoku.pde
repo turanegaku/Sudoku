@@ -46,17 +46,21 @@ void draw() {
         text(field.getNumber(x, y), CELL_SIZE * x + CELL_SIZE / 2, CELL_SIZE * y + CELL_SIZE * 3 / 4);
       }
       else {
-        textFont(f2);
         for (int i = 0; i < 9; i++) {
           int X = CELL_SIZE * x + CELL_SIZE / 3 * (i % 3) + CELL_SIZE / 5;
           int Y = CELL_SIZE * y + CELL_SIZE / 3 * (2 - i / 3) + CELL_SIZE / 4;
-          fill(field.isLeft(x, y, i + 1) ? 0 : #bbbbff);
-          if (x == sx && y == sy && (X - mouseX) * (X - mouseX) + (Y - mouseY) * (Y - mouseY) < 8 * 8) {
-            fill(#aaaaaa);
-            textSize(20);
+          if (field.isLeft(x, y, i + 1)) {
+            fill(0);
+            if (x == sx && y == sy && (X - mouseX) * (X - mouseX) + (Y - mouseY) * (Y - mouseY) < 8 * 8) {
+              textFont(f1);
+              fill(0);
+              text(i + 1, X + 2, Y + 2);
+              fill(#fdaa7a);
+            }
           }else{
-            textFont(f2);
+            fill(#bbbbff);
           }
+          textFont(f2);
           text(i + 1, X, Y);
         }
       }
