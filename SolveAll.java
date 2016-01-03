@@ -1,4 +1,4 @@
-public class SolveAll extends Solve {
+public class SolveAll extends SolveDelete {
   boolean dfs(int idx){
     if (!field.checkwithreturn()) return false;
     if (idx == 0) {
@@ -19,8 +19,8 @@ public class SolveAll extends Solve {
     return false;
   }
 
-  public void run(){
+  protected void works(){
+    super.works();
     dfs(81);
-    sudoku.dialog.show(field.check() ? "Correct!" : "Incorrect.");
   }
 }

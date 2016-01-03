@@ -94,13 +94,12 @@ public void keyPressed(KeyEvent e) {
       }
     }
     if (e.isControlDown())
-      all.solve(field, this);
-    else
       delete.solve(field, this);
+    else
+      all.solve(field, this);
     return;
   }
   if (code == DELETE) {
-    // solve.stop();
     field.clearAll();
     return;
   }
