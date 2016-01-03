@@ -62,8 +62,6 @@ void draw() {
 
   fill(0);
   textFont(f1);
-  // if (solve.running)
-  //   text("solving :" + nf(solve.getSize(), 2, 0), width / 2, height - 10);
   dialog.draw();
 }
 
@@ -72,7 +70,7 @@ public void mousePressed(MouseEvent e) {
   int ny = mouseY / CELL_SIZE;
   if (ny >= 9) {
     sx = sy = -1;
-    delete.solve(field);
+    delete.solve(field, this);
     return;
   }
   if (sx == nx && sy == ny)
@@ -96,9 +94,9 @@ public void keyPressed(KeyEvent e) {
       }
     }
     if (e.isControlDown())
-      all.solve(field);
+      all.solve(field, this);
     else
-      delete.solve(field);
+      delete.solve(field, this);
     return;
   }
   if (code == DELETE) {
@@ -110,10 +108,6 @@ public void keyPressed(KeyEvent e) {
     field.clear(sx, sy);
     return;
   }
-  // if (code == 'C' && !solve.running) {
-  //   solve.check();
-  //   return;
-  // }
   if (code == 'Q') {
     field.clearAll();
     field.fix(1, 0, 3);
@@ -239,7 +233,6 @@ public void keyPressed(KeyEvent e) {
     }else{
       field.fix(sx, sy, code - '0');
     }
-    //    solve.start();
     return;
   }
   if (LEFT <= code && code <= DOWN && sx + sy >= 0) {

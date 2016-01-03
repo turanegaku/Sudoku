@@ -50,6 +50,6 @@ public class SolveDelete extends Solve {
       check.clear();
     }
 
-    field.check();
+    sudoku.dialog.show(field.check() ? "Correct!" : "Incorrect.");
   }
 }

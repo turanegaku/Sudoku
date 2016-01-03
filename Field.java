@@ -47,20 +47,46 @@ public class Field {
     return (cell[y][x].left_bit & (1 << n - 1)) != 0;
   }
 
-  public void check(){
+  public boolean checkwithreturn(){
     for(int idx = 0; idx < 9; idx++) {
-      int h = Cell.ALL;
-      int v = Cell.ALL;
-      int b = Cell.ALL;
+      for(int i = 0; i < 9 - 1; i++) {
+        for(int j = i + 1; j < 9; j++) {
+          if(isFix(i, idx) && isFix(j, idx))
+            if((getBit(i, idx) & getBit(j, idx)) != 0) {
+              return false;
+            }
+          if(isFix(idx, i) && isFix(idx, j))
+            if((getBit(idx, i) & getBit(idx, j)) != 0) {
+              return false;
+            }
+          int xi = idx % 3 * 3 + i % 3;
+          int yi = idx / 3 * 3 + i / 3;
+          int xj = idx % 3 * 3 + j % 3;
+          int yj = idx / 3 * 3 + j / 3;
+          if(isFix(xi, yi) && isFix(xj, yj))
+            if((getBit(xi, yi) & getBit(xj, yj)) != 0) {
+              return false;
+            }
+        }
+      }
+    }
+    return true;
+  }
+
+  public boolean check(){
+    boolean result = true;
+    for(int idx = 0; idx < 9; idx++) {
       for(int i = 0; i < 9 - 1; i++) {
         for(int j = i + 1; j < 9; j++) {
           if((getBit(i, idx) & getBit(j, idx)) != 0) {
             toError(i, idx);
             toError(j, idx);
+            result = false;
           }
           if((getBit(idx, i) & getBit(idx, j)) != 0) {
             toError(idx, i);
             toError(idx, j);
+            result = false;
           }
           int xi = idx % 3 * 3 + i % 3;
           int yi = idx / 3 * 3 + i / 3;
@@ -69,10 +95,12 @@ public class Field {
           if((getBit(xi, yi) & getBit(xj, yj)) != 0) {
             toError(xi, yi);
             toError(xj, yj);
+            result = false;
           }
         }
       }
     }
+    return result;
   }
 
   public void delete(int sx, int sy, int dx, int dy){

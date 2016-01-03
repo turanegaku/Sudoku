@@ -1,8 +1,10 @@
 public abstract class Solve implements Runnable {
-  Field field;
+  protected Field field;
+  protected Sudoku sudoku;
   private int [][] group = new int[3][9];
-  public void solve(Field field){
+  public void solve(Field field, Sudoku sudoku){
     this.field = field;
+    this.sudoku = sudoku;
     new Thread(this).start();
   }
 
