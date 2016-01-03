@@ -83,55 +83,7 @@ public void mousePressed(MouseEvent e) {
 
 public void keyPressed(KeyEvent e) {
   int code = e.getKeyCode();
-  if (code == ESC) {
-    sx = sy = sx + sy < 0 ? 0 : -1;
-    return;
-  }
-  if (code == ENTER) {
-    for(int j = 0; j < 9; j++) {
-      for(int i = 0; i < 9; i++) {
-        field.clearError(j, i);
-      }
-    }
-    if (e.isControlDown())
-      delete.solve(field, dialog);
-    else
-      all.solve(field, dialog);
-    return;
-  }
-  if (code == DELETE) {
-    field.clearAll();
-    return;
-  }
-  if (code == BACKSPACE) {
-    field.clear(sx, sy);
-    return;
-  }
-  if (code == 'Q') {
-    field.clearAll();
-    field.setCellString(SolveTest.dataEasy);
-    return;
-  }
-  if (code == 'W') {
-    field.clearAll();
-    field.setCellString(SolveTest.dataNrml);
-    return;
-  }
-  if (code == 'E') {
-    field.clearAll();
-    field.setCellString(SolveTest.dataHard);
-    return;
-  }
-  if (code == 'R') {
-    field.clearAll();
-    field.setCellString(SolveTest.dataPrfs);
-    return;
-  }
-  if (code == 'T') {
-    field.clearAll();
-    field.setCellString(SolveTest.dataLuna);
-    return;
-  }
+
   if ('0' <= code && code <= '9') {
     field.clearError(sx, sy);
     if (e.isShiftDown()) {
@@ -139,12 +91,63 @@ public void keyPressed(KeyEvent e) {
     }else{
       field.fix(sx, sy, code - '0');
     }
-    return;
-  }
-  if (LEFT <= code && code <= DOWN && sx + sy >= 0) {
+  } else if (LEFT <= code && code <= DOWN && sx + sy >= 0) {
     code -= LEFT;
     sx = constrain(sx + (code - 1) % 2, 0, 8);
     sy = constrain(sy + (code - 2) % 2, 0, 8);
-    return;
-  }
+  }else
+    switch(code) {
+    case 'K':
+      sy = constrain(sy - 1, 0, 8);
+      break;
+    case 'L':
+      sx = constrain(sx + 1, 0, 8);
+      break;
+    case 'H':
+      sx = constrain(sx - 1, 0, 8);
+      break;
+    case 'J':
+      sy = constrain(sy + 1, 0, 8);
+      break;
+    case ESC:
+      sx = sy = sx + sy < 0 ? 0 : -1;
+      break;
+    case ENTER:
+      for(int j = 0; j < 9; j++) {
+        for(int i = 0; i < 9; i++) {
+          field.clearError(j, i);
+        }
+      }
+      if (e.isControlDown())
+        delete.solve(field, dialog);
+      else
+        all.solve(field, dialog);
+      break;
+    case DELETE:
+      field.clearAll();
+      break;
+    case BACKSPACE:
+      field.clear(sx, sy);
+      break;
+    case 'Q':
+      field.clearAll();
+      field.setCellString(SolveTest.dataEasy);
+      break;
+    case 'W':
+      field.clearAll();
+      field.setCellString(SolveTest.dataNrml);
+      break;
+    case 'E':
+      field.clearAll();
+      field.setCellString(SolveTest.dataHard);
+      break;
+    case 'R':
+      field.clearAll();
+      field.setCellString(SolveTest.dataPrfs);
+      break;
+    case 'T':
+      field.clearAll();
+      field.setCellString(SolveTest.dataLuna);
+      break;
+    }
 }
