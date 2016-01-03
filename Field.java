@@ -49,44 +49,27 @@ public class Field {
 
   public void check(){
     for(int idx = 0; idx < 9; idx++) {
-      int ha = Cell.ALL;
-      int va = Cell.ALL;
-      int ba = Cell.ALL;
-      int ho = Cell.NONE;
-      int vo = Cell.NONE;
-      int bo = Cell.NONE;
-      int hp = Cell.NONE;
-      int vp = Cell.NONE;
-      int bp = Cell.NONE;
-      for(int i = 0; i < 9; i++) {
-        ho |= getBit(i, idx);
-        hp += getBit(i, idx);
-        ha &= getBit(i, idx);
-        vo |= getBit(idx, i);
-        vp += getBit(idx, i);
-        va &= getBit(idx, i);
-        int x = idx % 3 * 3 + i % 3;
-        int y = idx / 3 * 3 + i / 3;
-        bo |= getBit(x, y);
-        bp += getBit(x, y);
-        ba &= getBit(x, y);
-      }
-      if ( ho != Cell.ALL || hp != Cell.ALL || ha != Cell.NONE) {
-        int bit = Cell.NONE;
-        for(int i = 0; i < 9; i++) {
-          toError(i, idx);
-        }
-      }
-      if ( vo != Cell.ALL || vp != Cell.ALL || va != Cell.NONE) {
-        for(int i = 0; i < 9; i++) {
-          toError(idx, i);
-        }
-      }
-      if ( bo != Cell.ALL || bp != Cell.ALL || ba != Cell.NONE) {
-        for(int i = 0; i < 9; i++) {
-          int x = idx % 3 * 3 + i % 3;
-          int y = idx / 3 * 3 + i / 3;
-          toError(x, y);
+      int h = Cell.ALL;
+      int v = Cell.ALL;
+      int b = Cell.ALL;
+      for(int i = 0; i < 9 - 1; i++) {
+        for(int j = i + 1; j < 9; j++) {
+          if((getBit(i, idx) & getBit(j, idx)) != 0) {
+            toError(i, idx);
+            toError(j, idx);
+          }
+          if((getBit(idx, i) & getBit(idx, j)) != 0) {
+            toError(idx, i);
+            toError(idx, j);
+          }
+          int xi = idx % 3 * 3 + i % 3;
+          int yi = idx / 3 * 3 + i / 3;
+          int xj = idx % 3 * 3 + j % 3;
+          int yj = idx / 3 * 3 + j / 3;
+          if((getBit(xi, yi) & getBit(xj, yj)) != 0) {
+            toError(xi, yi);
+            toError(xj, yj);
+          }
         }
       }
     }

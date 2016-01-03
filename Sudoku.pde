@@ -233,6 +233,7 @@ public void keyPressed(KeyEvent e) {
     return;
   }
   if ('0' <= code && code <= '9') {
+    field.clearError(sx, sy);
     if (e.isShiftDown()) {
       field.toggle(sx, sy, code - '0');
     }else{
