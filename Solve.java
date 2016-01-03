@@ -1,10 +1,10 @@
 public abstract class Solve implements Runnable {
   protected Field field;
-  protected Sudoku sudoku;
+  private Logger logger;
   private int [][] group = new int[3][9];
-  public void solve(Field field, Sudoku sudoku){
+  public void solve(Field field, Logger logger){
     this.field = field;
-    this.sudoku = sudoku;
+    this.logger = logger;
     new Thread(this).start();
   }
 
@@ -21,6 +21,6 @@ public abstract class Solve implements Runnable {
 
   public void run(){
     works();
-    sudoku.dialog.show(field.check() ? "Correct!" : "Incorrect.");
+    logger.show(field.check() ? "Correct!" : "Incorrect.");
   }
 }

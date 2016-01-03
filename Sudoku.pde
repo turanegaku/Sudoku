@@ -94,9 +94,9 @@ public void keyPressed(KeyEvent e) {
       }
     }
     if (e.isControlDown())
-      delete.solve(field, this);
+      delete.solve(field, dialog);
     else
-      all.solve(field, this);
+      all.solve(field, dialog);
     return;
   }
   if (code == DELETE) {
