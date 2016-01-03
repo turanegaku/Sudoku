@@ -70,7 +70,7 @@ public void mousePressed(MouseEvent e) {
   int ny = mouseY / CELL_SIZE;
   if (ny >= 9) {
     sx = sy = -1;
-    all.solve(field, this);
+    delete.solve(field, dialog);
     return;
   }
   if (sx == nx && sy == ny)
@@ -109,120 +109,27 @@ public void keyPressed(KeyEvent e) {
   }
   if (code == 'Q') {
     field.clearAll();
-    field.fix(1, 0, 3);
-    field.fix(6, 0, 8);
-    field.fix(0, 1, 9);
-    field.fix(7, 1, 3);
-    field.fix(2, 2, 8);
-    field.fix(8, 2, 7);
-    field.fix(2, 3, 7);
-    field.fix(0, 4, 1);
-    field.fix(4, 4, 8);
-    field.fix(7, 4, 2);
-    field.fix(4, 5, 4);
-    field.fix(5, 5, 3);
-    field.fix(6, 5, 6);
-    field.fix(8, 5, 9);
-    field.fix(0, 6, 7);
-    field.fix(2, 6, 1);
-    field.fix(3, 6, 9);
-    field.fix(3, 7, 7);
-    field.fix(4, 7, 5);
-    field.fix(7, 7, 4);
-    field.fix(1, 8, 4);
-    field.fix(4, 8, 1);
-    field.fix(7, 8, 9);
-    field.fix(8, 8, 2);
+    field.setCellString(SolveTest.dataEasy);
     return;
   }
   if (code == 'W') {
     field.clearAll();
-    field.fix(1, 0, 9);
-    field.fix(2, 0, 1);
-    field.fix(4, 0, 2);
-    field.fix(6, 1, 7);
-    field.fix(8, 1, 6);
-    field.fix(7, 3, 9);
-    field.fix(0, 4, 6);
-    field.fix(0, 5, 7);
-    field.fix(2, 5, 5);
-    field.fix(3, 5, 6);
-    field.fix(0, 6, 8);
-    field.fix(8, 6, 3);
-    field.fix(4, 7, 9);
-    field.fix(5, 7, 4);
-    field.fix(7, 7, 2);
-    field.fix(2, 8, 7);
-    field.fix(4, 8, 1);
+    field.setCellString(SolveTest.dataNrml);
     return;
   }
   if (code == 'E') {
     field.clearAll();
-    field.fix(0, 0, 9);
-    field.fix(6, 0, 5);
-    field.fix(8, 0, 4);
-    field.fix(1, 1, 5);
-    field.fix(4, 2, 8);
-    field.fix(5, 2, 1);
-    field.fix(0, 4, 2);
-    field.fix(3, 4, 4);
-    field.fix(4, 4, 5);
-    field.fix(2, 5, 7);
-    field.fix(7, 5, 8);
-    field.fix(0, 6, 7);
-    field.fix(4, 6, 9);
-    field.fix(1, 7, 8);
-    field.fix(7, 7, 1);
-    field.fix(3, 8, 2);
-    field.fix(6, 8, 3);
+    field.setCellString(SolveTest.dataHard);
     return;
   }
   if (code == 'R') {
     field.clearAll();
-    field.fix(0, 0, 1);
-    field.fix(1, 0, 9);
-    field.fix(8, 0, 4);
-    field.fix(4, 1, 7);
-    field.fix(5, 1, 1);
-    field.fix(7, 1, 2);
-    field.fix(8, 1, 8);
-    field.fix(1, 2, 8);
-    field.fix(2, 2, 2);
-    field.fix(5, 2, 3);
-    field.fix(6, 2, 5);
-    field.fix(2, 3, 9);
-    field.fix(3, 3, 6);
-    field.fix(4, 3, 4);
-    field.fix(6, 3, 1);
-    field.fix(7, 3, 8);
-    field.fix(0, 4, 5);
-    field.fix(2, 4, 7);
-    field.fix(3, 4, 1);
-    field.fix(4, 4, 3);
-    field.fix(8, 4, 9);
-    field.fix(0, 5, 6);
-    field.fix(2, 5, 8);
-    field.fix(3, 5, 2);
-    field.fix(7, 5, 5);
-    field.fix(0, 6, 9);
-    field.fix(1, 6, 3);
-    field.fix(2, 6, 6);
-    field.fix(4, 6, 8);
-    field.fix(5, 6, 4);
-    field.fix(6, 6, 7);
-    field.fix(0, 7, 2);
-    field.fix(1, 7, 5);
-    field.fix(2, 7, 4);
-    field.fix(4, 7, 1);
-    field.fix(5, 7, 9);
-    field.fix(6, 7, 8);
-    field.fix(7, 7, 3);
-    field.fix(1, 8, 7);
-    field.fix(3, 8, 3);
-    field.fix(4, 8, 2);
-    field.fix(5, 8, 6);
-    field.fix(7, 8, 4);
-    field.fix(8, 8, 5);
+    field.setCellString(SolveTest.dataPrfs);
+    return;
+  }
+  if (code == 'T') {
+    field.clearAll();
+    field.setCellString(SolveTest.dataLuna);
     return;
   }
   if ('0' <= code && code <= '9') {
