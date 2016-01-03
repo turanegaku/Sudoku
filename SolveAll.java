@@ -21,6 +21,6 @@ public class SolveAll extends Solve {
 
   public void run(){
     dfs(81);
-    field.check();
+    sudoku.dialog.show(field.check() ? "Correct!" : "Incorrect.");
   }
 }

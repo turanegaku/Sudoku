@@ -73,17 +73,20 @@ public class Field {
     return true;
   }
 
-  public void check(){
+  public boolean check(){
+    boolean result = true;
     for(int idx = 0; idx < 9; idx++) {
       for(int i = 0; i < 9 - 1; i++) {
         for(int j = i + 1; j < 9; j++) {
           if((getBit(i, idx) & getBit(j, idx)) != 0) {
             toError(i, idx);
             toError(j, idx);
+            result = false;
           }
           if((getBit(idx, i) & getBit(idx, j)) != 0) {
             toError(idx, i);
             toError(idx, j);
+            result = false;
           }
           int xi = idx % 3 * 3 + i % 3;
           int yi = idx / 3 * 3 + i / 3;
@@ -92,10 +95,12 @@ public class Field {
           if((getBit(xi, yi) & getBit(xj, yj)) != 0) {
             toError(xi, yi);
             toError(xj, yj);
+            result = false;
           }
         }
       }
     }
+    return result;
   }
 
   public void delete(int sx, int sy, int dx, int dy){
