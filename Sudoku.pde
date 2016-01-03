@@ -22,7 +22,7 @@ void setup() {
   f2 = createFont("ComicSansMS", 10);
 
   textAlign(CENTER);
-  frameRate(10);
+  frameRate(30);
 }
 
 public void saverequest(String nam) {
@@ -46,10 +46,22 @@ void draw() {
         text(field.getNumber(x, y), CELL_SIZE * x + CELL_SIZE / 2, CELL_SIZE * y + CELL_SIZE * 3 / 4);
       }
       else {
-        textFont(f2);
         for (int i = 0; i < 9; i++) {
-          fill(field.isLeft(x, y, i + 1) ? 0 : #bbbbff);
-          text(i + 1, CELL_SIZE * x + CELL_SIZE / 3 * (i % 3) + CELL_SIZE / 5, CELL_SIZE * y + CELL_SIZE / 3 * (2 - i / 3) + CELL_SIZE / 4);
+          int X = CELL_SIZE * x + CELL_SIZE / 3 * (i % 3) + CELL_SIZE / 5;
+          int Y = CELL_SIZE * y + CELL_SIZE / 3 * (2 - i / 3) + CELL_SIZE / 4;
+          if (field.isLeft(x, y, i + 1)) {
+            fill(0);
+            if (x == sx && y == sy && (X - mouseX) * (X - mouseX) + (Y - mouseY) * (Y - mouseY) < 8 * 8) {
+              textFont(f1);
+              fill(0);
+              text(i + 1, X + 2, Y + 2);
+              fill(#fdaa7a);
+            }
+          }else{
+            fill(#bbbbff);
+          }
+          textFont(f2);
+          text(i + 1, X, Y);
         }
       }
     }
@@ -70,12 +82,14 @@ public void mousePressed(MouseEvent e) {
   int ny = mouseY / CELL_SIZE;
   if (ny >= 9) {
     sx = sy = -1;
-    delete.solve(field, dialog);
+    all.solve(field, dialog);
     return;
-  }
-  if (sx == nx && sy == ny)
-    sx = sy = -1;
-  else {
+  }else{
+    if (nx == sx && ny == ny) {
+      int ssx = (mouseX - nx * CELL_SIZE) / (CELL_SIZE / 3);
+      int ssy = 2 - (mouseY - ny * CELL_SIZE) / (CELL_SIZE / 3);
+      field.toggle(sx, sy, ssy * 3 + ssx + 1);
+    }
     sx = nx;
     sy = ny;
   }
