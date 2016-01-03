@@ -19,8 +19,7 @@ public class SolveAll extends Solve {
     return false;
   }
 
-  public void run(){
+  protected void works(){
     dfs(81);
-    sudoku.dialog.show(field.check() ? "Correct!" : "Incorrect.");
   }
 }

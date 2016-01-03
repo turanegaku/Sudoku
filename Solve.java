@@ -17,5 +17,10 @@ public abstract class Solve implements Runnable {
     return group;
   }
 
-  public abstract void run();
+  protected abstract void works();
+
+  public void run(){
+    works();
+    sudoku.dialog.show(field.check() ? "Correct!" : "Incorrect.");
+  }
 }

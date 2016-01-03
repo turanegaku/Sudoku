@@ -2,7 +2,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class SolveDelete extends Solve {
-  public void run(){
+  protected void works(){
     Set<Integer> delete = new HashSet<>();
     Set<Integer> check = new HashSet<>();
     boolean[][] used = new boolean[9][9];
@@ -49,7 +49,5 @@ public class SolveDelete extends Solve {
       }
       check.clear();
     }
-
-    sudoku.dialog.show(field.check() ? "Correct!" : "Incorrect.");
   }
 }
