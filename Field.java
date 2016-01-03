@@ -49,9 +49,6 @@ public class Field {
 
   public void check(){
     for(int idx = 0; idx < 9; idx++) {
-      int h = Cell.ALL;
-      int v = Cell.ALL;
-      int b = Cell.ALL;
       for(int i = 0; i < 9 - 1; i++) {
         for(int j = i + 1; j < 9; j++) {
           if((getBit(i, idx) & getBit(j, idx)) != 0) {
