@@ -27,6 +27,10 @@ public class Field {
     error[y][x] = true;
   }
 
+  public void clearError(int x, int y){
+    error[y][x] = false;
+  }
+
   public int getBit(int x, int y){
     return cell[y][x].left_bit;
   }

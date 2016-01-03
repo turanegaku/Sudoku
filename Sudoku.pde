@@ -36,9 +36,9 @@ void draw() {
     for (int x = 0; x < 9; x++) {
       fill(sx == x && sy == y ? #ccccff : #ffffff);
       rect(CELL_SIZE * x, CELL_SIZE * y, CELL_SIZE, CELL_SIZE);
-      if (field.isError(x, y)){
-      fill(#ffaaaa, 100);
-      rect(CELL_SIZE * x, CELL_SIZE * y, CELL_SIZE, CELL_SIZE);
+      if (field.isError(x, y)) {
+        fill(#ffaaaa, 100);
+        rect(CELL_SIZE * x, CELL_SIZE * y, CELL_SIZE, CELL_SIZE);
       }
       fill(0);
       if (field.isFix(x, y)) {
@@ -90,6 +90,11 @@ public void keyPressed(KeyEvent e) {
     return;
   }
   if (code == ENTER) {
+    for(int j = 0; j < 9; j++) {
+      for(int i = 0; i < 9; i++) {
+        field.clearError(j, i);
+      }
+    }
     if (e.isControlDown())
       all.solve(field);
     else
