@@ -97,6 +97,18 @@ public void keyPressed(KeyEvent e) {
     sy = constrain(sy + (code - 2) % 2, 0, 8);
   }else
     switch(code) {
+    case 'K':
+      sy = constrain(sy - 1, 0, 8);
+      break;
+    case 'L':
+      sx = constrain(sx + 1, 0, 8);
+      break;
+    case 'H':
+      sx = constrain(sx - 1, 0, 8);
+      break;
+    case 'J':
+      sy = constrain(sy + 1, 0, 8);
+      break;
     case ESC:
       sx = sy = sx + sy < 0 ? 0 : -1;
       break;
