@@ -1,4 +1,5 @@
 public class SolveAll extends SolveDelete {
+  // 再帰で一個ずつ見てく
   boolean dfs(int idx){
     if (!field.checkwithreturn()) return false;
     if (idx == 0) {

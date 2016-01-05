@@ -20,6 +20,7 @@ public class Field {
     setCellString(cellstr);
   }
 
+  // 1~9からなる長さ81からなる文字列を受け取り，Cellにセットする
   public void setCellString(String cellstr){
     if (cellstr.length() != 81) return;
     for (int y = 0; y < 9; y++) {
@@ -30,12 +31,12 @@ public class Field {
     }
   }
 
-  public boolean isFix(int x, int y){
-    return cell[y][x].isFix();
+  public void fix(int x, int y, int n){
+    cell[y][x].fix(n);
   }
 
-  public boolean isError(int x, int y){
-    return error[y][x];
+  public boolean isFix(int x, int y){
+    return cell[y][x].isFix();
   }
 
   public void toError(int x, int y){
@@ -46,22 +47,37 @@ public class Field {
     error[y][x] = false;
   }
 
-  public int getBit(int x, int y){
-    return cell[y][x].left_bit;
+  public boolean isError(int x, int y){
+    return error[y][x];
   }
 
   public void setBit(int x, int y, int bit){
     cell[y][x].setBit(bit);
   }
 
+  public int getBit(int x, int y){
+    return cell[y][x].getBit();
+  }
+
   public int getNumber(int x, int y){
-    return cell[y][x].fix_number;
+    return cell[y][x].getNumber();
   }
 
+  // nの可能性を消す
+  public void delete(int sx, int sy, int dx, int dy){
+    cell[sy][sx].delete(cell[dy][dx].getBit());
+  }
+
+  public void toggle(int x, int y, int n){
+    cell[y][x].toggle(n);
+  }
+
+  // nの可能性が残っているか
   public boolean isLeft(int x, int y, int n){
-    return (cell[y][x].left_bit & (1 << n - 1)) != 0;
+    return (cell[y][x].getBit() & (1 << n - 1)) != 0;
   }
 
+  // 盤面が正しいかどうかのチェック(途中で帰るver)
   public boolean checkwithreturn(){
     for(int idx = 0; idx < 9; idx++) {
       for(int i = 0; i < 9 - 1; i++) {
@@ -88,6 +104,7 @@ public class Field {
     return true;
   }
 
+  // 盤面が正しいかどうかのチェック
   public boolean check(){
     boolean result = true;
     for(int idx = 0; idx < 9; idx++) {
@@ -116,18 +133,6 @@ public class Field {
       }
     }
     return result;
-  }
-
-  public void delete(int sx, int sy, int dx, int dy){
-    cell[sy][sx].delete(cell[dy][dx].left_bit);
-  }
-
-  public void toggle(int x, int y, int n){
-    cell[y][x].toggle(n);
-  }
-
-  public void fix(int x, int y, int n){
-    cell[y][x].fix(n);
   }
 
   public void clear(int x, int y){

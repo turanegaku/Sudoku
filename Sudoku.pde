@@ -1,11 +1,9 @@
 final int CELL_SIZE = 50;
 
-Solve delete;
-SolveAll all;
+Solve delete, all, check;
 Dialog dialog;
 Field field;
 PFont f1, f2;
-String name;
 int sx, sy;
 
 void settings(){
@@ -16,6 +14,7 @@ void setup() {
   sx = sy = 0;
   delete = new SolveDelete();
   all = new SolveAll();
+  check = new Check();
   dialog = new Dialog(width / 2, height - 10);
   field = new Field();
   f1 = createFont("ComicSansMS", 25);
@@ -23,10 +22,6 @@ void setup() {
 
   textAlign(CENTER);
   frameRate(30);
-}
-
-public void saverequest(String nam) {
-  this.name = nam;
 }
 
 void draw() {
@@ -81,7 +76,6 @@ public void mousePressed(MouseEvent e) {
   int nx = mouseX / CELL_SIZE;
   int ny = mouseY / CELL_SIZE;
   if (ny >= 9) {
-    sx = sy = -1;
     all.solve(field, dialog);
     return;
   }else{
@@ -105,26 +99,26 @@ public void keyPressed(KeyEvent e) {
     }else{
       field.fix(sx, sy, code - '0');
     }
-  } else if (LEFT <= code && code <= DOWN && sx + sy >= 0) {
-    code -= LEFT;
-    sx = constrain(sx + (code - 1) % 2, 0, 8);
-    sy = constrain(sy + (code - 2) % 2, 0, 8);
   }else
     switch(code) {
-    case 'K':
-      sy = constrain(sy - 1, 0, 8);
-      break;
-    case 'L':
-      sx = constrain(sx + 1, 0, 8);
-      break;
+    case LEFT:
     case 'H':
       sx = constrain(sx - 1, 0, 8);
       break;
+    case UP:
+    case 'K':
+      sy = constrain(sy - 1, 0, 8);
+      break;
+    case RIGHT:
+    case 'L':
+      sx = constrain(sx + 1, 0, 8);
+      break;
+    case DOWN:
     case 'J':
       sy = constrain(sy + 1, 0, 8);
       break;
-    case ESC:
-      sx = sy = sx + sy < 0 ? 0 : -1;
+    case 'C':
+      check.solve(field, dialog);
       break;
     case ENTER:
       for(int j = 0; j < 9; j++) {

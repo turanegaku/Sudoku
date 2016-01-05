@@ -13,8 +13,9 @@ public class Dialog extends Logger {
     }
   }
 
+  // txtを120sec表示する
   public void show(String txt) {
-    println(txt);
+    super.show(txt);
     this.txt = txt;
     t = 120;
   }
