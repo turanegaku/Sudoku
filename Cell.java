@@ -16,15 +16,15 @@ public class Cell {
     fix_number = Integer.bitCount(left_bit) == 1 ? Integer.numberOfTrailingZeros(left_bit) + 1 : NONE;
   }
 
-  public boolean isFix(){
-    return fix_number != 0;
-  }
-
   // セルをn(1-9)で確定する
   public void fix(int n) {
     if (n <= 0 || 10 <= n) return;
     left_bit = 1 << n - 1;
     fix_number = n;
+  }
+
+  public boolean isFix(){
+    return fix_number != 0;
   }
 
   public int getNumber(){

@@ -31,12 +31,12 @@ public class Field {
     }
   }
 
-  public boolean isFix(int x, int y){
-    return cell[y][x].isFix();
+  public void fix(int x, int y, int n){
+    cell[y][x].fix(n);
   }
 
-  public boolean isError(int x, int y){
-    return error[y][x];
+  public boolean isFix(int x, int y){
+    return cell[y][x].isFix();
   }
 
   public void toError(int x, int y){
@@ -47,12 +47,16 @@ public class Field {
     error[y][x] = false;
   }
 
-  public int getBit(int x, int y){
-    return cell[y][x].getBit();
+  public boolean isError(int x, int y){
+    return error[y][x];
   }
 
   public void setBit(int x, int y, int bit){
     cell[y][x].setBit(bit);
+  }
+
+  public int getBit(int x, int y){
+    return cell[y][x].getBit();
   }
 
   public int getNumber(int x, int y){
@@ -60,6 +64,14 @@ public class Field {
   }
 
   // nの可能性を消す
+  public void delete(int sx, int sy, int dx, int dy){
+    cell[sy][sx].delete(cell[dy][dx].getBit());
+  }
+
+  public void toggle(int x, int y, int n){
+    cell[y][x].toggle(n);
+  }
+
   // nの可能性が残っているか
   public boolean isLeft(int x, int y, int n){
     return (cell[y][x].getBit() & (1 << n - 1)) != 0;
@@ -121,18 +133,6 @@ public class Field {
       }
     }
     return result;
-  }
-
-  public void delete(int sx, int sy, int dx, int dy){
-    cell[sy][sx].delete(cell[dy][dx].getBit());
-  }
-
-  public void toggle(int x, int y, int n){
-    cell[y][x].toggle(n);
-  }
-
-  public void fix(int x, int y, int n){
-    cell[y][x].fix(n);
   }
 
   public void clear(int x, int y){
