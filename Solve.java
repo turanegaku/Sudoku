@@ -11,6 +11,10 @@ public abstract class Solve implements Runnable {
       new Thread(this).start();
   }
 
+  /**
+    * xyの位置のセルと同じグループのセルのxyを返す
+    * 上位4bitにy,下位4bitにxの情報を入れる
+    */
   protected int[][] getGroup(int x, int y){
     for (int i = 0; i < 9; i++) {
       group[0][i] = (y << 4) + i;   // horizontal
@@ -20,6 +24,7 @@ public abstract class Solve implements Runnable {
     return group;
   }
 
+  // この中に実装する
   protected abstract void works();
 
   public void run(){

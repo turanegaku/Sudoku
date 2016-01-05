@@ -7,6 +7,7 @@ public class SolveDelete extends Solve {
     Set<Integer> check = new HashSet<>();
     boolean[][] used = new boolean[9][9];
 
+    // 提示盤面での確定セルをdeleteに挿入する
     for (int y = 0; y < 9; y++) {
       for (int x = 0; x < 9; x++) {
         if (field.isFix(x, y)) {
@@ -16,6 +17,8 @@ public class SolveDelete extends Solve {
     }
 
     while(delete.size() + check.size() > 0) {
+      // 確定セルと同グループのセルから可能性を消していく
+      // 削除の対象になったセルをcheckに挿入する
       for(int p : delete) {
         int x = p & 0xf, y = p >> 4;
         used[y][x] = true;
@@ -31,6 +34,9 @@ public class SolveDelete extends Solve {
         }
       }
       delete.clear();
+
+      // 同グループ中から唯一のセルかどうかを判断し確定する
+      // 確定セルになった場合はdeleteに挿入する
       for(int p : check) {
         int x = p & 0xf, y = p >> 4;
         int[][] groups = getGroup(x, y);

@@ -20,6 +20,7 @@ public class Field {
     setCellString(cellstr);
   }
 
+  // 1~9からなる長さ81からなる文字列を受け取り，Cellにセットする
   public void setCellString(String cellstr){
     if (cellstr.length() != 81) return;
     for (int y = 0; y < 9; y++) {
@@ -58,10 +59,13 @@ public class Field {
     return cell[y][x].getNumber();
   }
 
+  // nの可能性を消す
+  // nの可能性が残っているか
   public boolean isLeft(int x, int y, int n){
     return (cell[y][x].getBit() & (1 << n - 1)) != 0;
   }
 
+  // 盤面が正しいかどうかのチェック(途中で帰るver)
   public boolean checkwithreturn(){
     for(int idx = 0; idx < 9; idx++) {
       for(int i = 0; i < 9 - 1; i++) {
@@ -88,6 +92,7 @@ public class Field {
     return true;
   }
 
+  // 盤面が正しいかどうかのチェック
   public boolean check(){
     boolean result = true;
     for(int idx = 0; idx < 9; idx++) {

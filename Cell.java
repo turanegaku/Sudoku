@@ -20,6 +20,7 @@ public class Cell {
     return fix_number != 0;
   }
 
+  // セルをn(1-9)で確定する
   public void fix(int n) {
     if (n <= 0 || 10 <= n) return;
     left_bit = 1 << n - 1;
