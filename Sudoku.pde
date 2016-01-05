@@ -27,10 +27,6 @@ void setup() {
   frameRate(30);
 }
 
-public void saverequest(String nam) {
-  this.name = nam;
-}
-
 void draw() {
   background(#cccccc);
   strokeWeight(1);
