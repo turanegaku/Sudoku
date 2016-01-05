@@ -1,5 +1,5 @@
 # Sudoku
-Tool for Sudoku
+Tool for Sudoku (with Processing)
 
 ![pv](https://raw.githubusercontent.com/turanegaku/Sudoku/data/m1.gif)
 
@@ -10,6 +10,7 @@ Tool for Sudoku
 - 各セル毎に1-9の可能性を保持し，それを付けたり消したりできる
 - 確定したセルの数字は大きく表示する
 - チェックを行うと盤面が正しいか正しくないかを表示する
+
 #### 数独の解を求めるツール
 - 消去法で候補を絞った後に全探索を行ない解を求める
 
