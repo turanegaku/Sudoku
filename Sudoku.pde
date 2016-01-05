@@ -1,7 +1,8 @@
 final int CELL_SIZE = 50;
 
 Solve delete;
-SolveAll all;
+Solve all;
+Solve check;
 Dialog dialog;
 Field field;
 PFont f1, f2;
@@ -16,6 +17,7 @@ void setup() {
   sx = sy = 0;
   delete = new SolveDelete();
   all = new SolveAll();
+  check = new Check();
   dialog = new Dialog(width / 2, height - 10);
   field = new Field();
   f1 = createFont("ComicSansMS", 25);
@@ -122,6 +124,9 @@ public void keyPressed(KeyEvent e) {
       break;
     case 'J':
       sy = constrain(sy + 1, 0, 8);
+      break;
+    case 'C':
+      check.solve(field, dialog);
       break;
     case ESC:
       sx = sy = sx + sy < 0 ? 0 : -1;
