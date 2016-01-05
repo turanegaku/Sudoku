@@ -47,7 +47,7 @@ public class Field {
   }
 
   public int getBit(int x, int y){
-    return cell[y][x].left_bit;
+    return cell[y][x].getBit();
   }
 
   public void setBit(int x, int y, int bit){
@@ -55,11 +55,11 @@ public class Field {
   }
 
   public int getNumber(int x, int y){
-    return cell[y][x].fix_number;
+    return cell[y][x].getNumber();
   }
 
   public boolean isLeft(int x, int y, int n){
-    return (cell[y][x].left_bit & (1 << n - 1)) != 0;
+    return (cell[y][x].getBit() & (1 << n - 1)) != 0;
   }
 
   public boolean checkwithreturn(){
@@ -119,7 +119,7 @@ public class Field {
   }
 
   public void delete(int sx, int sy, int dx, int dy){
-    cell[sy][sx].delete(cell[dy][dx].left_bit);
+    cell[sy][sx].delete(cell[dy][dx].getBit());
   }
 
   public void toggle(int x, int y, int n){

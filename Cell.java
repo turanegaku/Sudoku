@@ -4,8 +4,8 @@ public class Cell {
   public static final int ALL = (1 << 9) - 1;
   public static final int NONE = 0;
 
-  public int left_bit;
-  public int fix_number;
+  private int left_bit;
+  private int fix_number;
 
   public Cell() {
     left_bit = ALL;
@@ -26,6 +26,10 @@ public class Cell {
     fix_number = n;
   }
 
+  public int getNumber(){
+    return fix_number;
+  }
+
   public void clear(){
     left_bit = ALL;
     fix_number = NONE;
@@ -39,6 +43,10 @@ public class Cell {
   public void setBit(int bit){
     left_bit = bit;
     fixCheck();
+  }
+
+  public int getBit(){
+    return left_bit;
   }
 
   public void toggle(int n){
