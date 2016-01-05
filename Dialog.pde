@@ -1,4 +1,4 @@
-public class Dialog {
+public class Dialog extends Logger {
   int x, y, t;
   String txt = "";
 
@@ -13,8 +13,9 @@ public class Dialog {
     }
   }
 
+  // txtを120sec表示する
   public void show(String txt) {
-    println(txt);
+    super.show(txt);
     this.txt = txt;
     t = 120;
   }

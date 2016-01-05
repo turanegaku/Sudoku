@@ -1,11 +1,9 @@
 final int CELL_SIZE = 50;
 
-Solve delete;
-SolveAll all;
+Solve delete, all, check;
 Dialog dialog;
 Field field;
 PFont f1, f2;
-String name;
 int sx, sy;
 
 void settings(){
@@ -16,16 +14,14 @@ void setup() {
   sx = sy = 0;
   delete = new SolveDelete();
   all = new SolveAll();
+  check = new Check();
   dialog = new Dialog(width / 2, height - 10);
   field = new Field();
   f1 = createFont("ComicSansMS", 25);
   f2 = createFont("ComicSansMS", 10);
 
   textAlign(CENTER);
-}
-
-public void saverequest(String nam) {
-  this.name = nam;
+  frameRate(30);
 }
 
 void draw() {
@@ -35,9 +31,9 @@ void draw() {
     for (int x = 0; x < 9; x++) {
       fill(sx == x && sy == y ? #ccccff : #ffffff);
       rect(CELL_SIZE * x, CELL_SIZE * y, CELL_SIZE, CELL_SIZE);
-      if (field.isError(x, y)){
-      fill(#ffaaaa, 100);
-      rect(CELL_SIZE * x, CELL_SIZE * y, CELL_SIZE, CELL_SIZE);
+      if (field.isError(x, y)) {
+        fill(#ffaaaa, 100);
+        rect(CELL_SIZE * x, CELL_SIZE * y, CELL_SIZE, CELL_SIZE);
       }
       fill(0);
       if (field.isFix(x, y)) {
@@ -45,10 +41,22 @@ void draw() {
         text(field.getNumber(x, y), CELL_SIZE * x + CELL_SIZE / 2, CELL_SIZE * y + CELL_SIZE * 3 / 4);
       }
       else {
-        textFont(f2);
         for (int i = 0; i < 9; i++) {
-          fill(field.isLeft(x, y, i + 1) ? 0 : #bbbbff);
-          text(i + 1, CELL_SIZE * x + CELL_SIZE / 3 * (i % 3) + CELL_SIZE / 5, CELL_SIZE * y + CELL_SIZE / 3 * (2 - i / 3) + CELL_SIZE / 4);
+          int X = CELL_SIZE * x + CELL_SIZE / 3 * (i % 3) + CELL_SIZE / 5;
+          int Y = CELL_SIZE * y + CELL_SIZE / 3 * (2 - i / 3) + CELL_SIZE / 4;
+          if (field.isLeft(x, y, i + 1)) {
+            fill(0);
+            if (x == sx && y == sy && (X - mouseX) * (X - mouseX) + (Y - mouseY) * (Y - mouseY) < 8 * 8) {
+              textFont(f1);
+              fill(0);
+              text(i + 1, X + 2, Y + 2);
+              fill(#fdaa7a);
+            }
+          }else{
+            fill(#bbbbff);
+          }
+          textFont(f2);
+          text(i + 1, X, Y);
         }
       }
     }
@@ -61,8 +69,6 @@ void draw() {
 
   fill(0);
   textFont(f1);
-  // if (solve.running)
-  //   text("solving :" + nf(solve.getSize(), 2, 0), width / 2, height - 10);
   dialog.draw();
 }
 
@@ -70,13 +76,14 @@ public void mousePressed(MouseEvent e) {
   int nx = mouseX / CELL_SIZE;
   int ny = mouseY / CELL_SIZE;
   if (ny >= 9) {
-    sx = sy = -1;
-    delete.solve(field);
+    all.solve(field, dialog);
     return;
-  }
-  if (sx == nx && sy == ny)
-    sx = sy = -1;
-  else {
+  }else{
+    if (nx == sx && ny == ny) {
+      int ssx = (mouseX - nx * CELL_SIZE) / (CELL_SIZE / 3);
+      int ssy = 2 - (mouseY - ny * CELL_SIZE) / (CELL_SIZE / 3);
+      field.toggle(sx, sy, ssy * 3 + ssx + 1);
+    }
     sx = nx;
     sy = ny;
   }
@@ -84,161 +91,71 @@ public void mousePressed(MouseEvent e) {
 
 public void keyPressed(KeyEvent e) {
   int code = e.getKeyCode();
-  if (code == ESC) {
-    sx = sy = sx + sy < 0 ? 0 : -1;
-    return;
-  }
-  if (code == ENTER) {
-    if (e.isControlDown())
-      all.solve(field);
-    else
-      delete.solve(field);
-    return;
-  }
-  if (code == DELETE) {
-    // solve.stop();
-    field.clearAll();
-    return;
-  }
-  if (code == BACKSPACE) {
-    field.clear(sx, sy);
-    return;
-  }
-  // if (code == 'C' && !solve.running) {
-  //   solve.check();
-  //   return;
-  // }
-  if (code == 'Q') {
-    field.clearAll();
-    field.fix(1, 0, 3);
-    field.fix(6, 0, 8);
-    field.fix(0, 1, 9);
-    field.fix(7, 1, 3);
-    field.fix(2, 2, 8);
-    field.fix(8, 2, 7);
-    field.fix(2, 3, 7);
-    field.fix(0, 4, 1);
-    field.fix(4, 4, 8);
-    field.fix(7, 4, 2);
-    field.fix(4, 5, 4);
-    field.fix(5, 5, 3);
-    field.fix(6, 5, 6);
-    field.fix(8, 5, 9);
-    field.fix(0, 6, 7);
-    field.fix(2, 6, 1);
-    field.fix(3, 6, 9);
-    field.fix(3, 7, 7);
-    field.fix(4, 7, 5);
-    field.fix(7, 7, 4);
-    field.fix(1, 8, 4);
-    field.fix(4, 8, 1);
-    field.fix(7, 8, 9);
-    field.fix(8, 8, 2);
-    return;
-  }
-  if (code == 'W') {
-    field.clearAll();
-    field.fix(1, 0, 9);
-    field.fix(2, 0, 1);
-    field.fix(4, 0, 2);
-    field.fix(6, 1, 7);
-    field.fix(8, 1, 6);
-    field.fix(7, 3, 9);
-    field.fix(0, 4, 6);
-    field.fix(0, 5, 7);
-    field.fix(2, 5, 5);
-    field.fix(3, 5, 6);
-    field.fix(0, 6, 8);
-    field.fix(8, 6, 3);
-    field.fix(4, 7, 9);
-    field.fix(5, 7, 4);
-    field.fix(7, 7, 2);
-    field.fix(2, 8, 7);
-    field.fix(4, 8, 1);
-    return;
-  }
-  if (code == 'E') {
-    field.clearAll();
-    field.fix(0, 0, 9);
-    field.fix(6, 0, 5);
-    field.fix(8, 0, 4);
-    field.fix(1, 1, 5);
-    field.fix(4, 2, 8);
-    field.fix(5, 2, 1);
-    field.fix(0, 4, 2);
-    field.fix(3, 4, 4);
-    field.fix(4, 4, 5);
-    field.fix(2, 5, 7);
-    field.fix(7, 5, 8);
-    field.fix(0, 6, 7);
-    field.fix(4, 6, 9);
-    field.fix(1, 7, 8);
-    field.fix(7, 7, 1);
-    field.fix(3, 8, 2);
-    field.fix(6, 8, 3);
-    return;
-  }
-  if (code == 'R') {
-    field.clearAll();
-    field.fix(0, 0, 1);
-    field.fix(1, 0, 9);
-    field.fix(8, 0, 4);
-    field.fix(4, 1, 7);
-    field.fix(5, 1, 1);
-    field.fix(7, 1, 2);
-    field.fix(8, 1, 8);
-    field.fix(1, 2, 8);
-    field.fix(2, 2, 2);
-    field.fix(5, 2, 3);
-    field.fix(6, 2, 5);
-    field.fix(2, 3, 9);
-    field.fix(3, 3, 6);
-    field.fix(4, 3, 4);
-    field.fix(6, 3, 1);
-    field.fix(7, 3, 8);
-    field.fix(0, 4, 5);
-    field.fix(2, 4, 7);
-    field.fix(3, 4, 1);
-    field.fix(4, 4, 3);
-    field.fix(8, 4, 9);
-    field.fix(0, 5, 6);
-    field.fix(2, 5, 8);
-    field.fix(3, 5, 2);
-    field.fix(7, 5, 5);
-    field.fix(0, 6, 9);
-    field.fix(1, 6, 3);
-    field.fix(2, 6, 6);
-    field.fix(4, 6, 8);
-    field.fix(5, 6, 4);
-    field.fix(6, 6, 7);
-    field.fix(0, 7, 2);
-    field.fix(1, 7, 5);
-    field.fix(2, 7, 4);
-    field.fix(4, 7, 1);
-    field.fix(5, 7, 9);
-    field.fix(6, 7, 8);
-    field.fix(7, 7, 3);
-    field.fix(1, 8, 7);
-    field.fix(3, 8, 3);
-    field.fix(4, 8, 2);
-    field.fix(5, 8, 6);
-    field.fix(7, 8, 4);
-    field.fix(8, 8, 5);
-    return;
-  }
+
   if ('0' <= code && code <= '9') {
+    field.clearError(sx, sy);
     if (e.isShiftDown()) {
       field.toggle(sx, sy, code - '0');
     }else{
       field.fix(sx, sy, code - '0');
     }
-    //    solve.start();
-    return;
-  }
-  if (LEFT <= code && code <= DOWN && sx + sy >= 0) {
-    code -= LEFT;
-    sx = constrain(sx + (code - 1) % 2, 0, 8);
-    sy = constrain(sy + (code - 2) % 2, 0, 8);
-    return;
-  }
+  }else
+    switch(code) {
+    case LEFT:
+    case 'H':
+      sx = constrain(sx - 1, 0, 8);
+      break;
+    case UP:
+    case 'K':
+      sy = constrain(sy - 1, 0, 8);
+      break;
+    case RIGHT:
+    case 'L':
+      sx = constrain(sx + 1, 0, 8);
+      break;
+    case DOWN:
+    case 'J':
+      sy = constrain(sy + 1, 0, 8);
+      break;
+    case 'C':
+      check.solve(field, dialog);
+      break;
+    case ENTER:
+      for(int j = 0; j < 9; j++) {
+        for(int i = 0; i < 9; i++) {
+          field.clearError(j, i);
+        }
+      }
+      if (e.isControlDown())
+        delete.solve(field, dialog);
+      else
+        all.solve(field, dialog);
+      break;
+    case DELETE:
+      field.clearAll();
+      break;
+    case BACKSPACE:
+      field.clear(sx, sy);
+      break;
+    case 'Q':
+      field.clearAll();
+      field.setCellString(SolveTest.dataEasy);
+      break;
+    case 'W':
+      field.clearAll();
+      field.setCellString(SolveTest.dataNrml);
+      break;
+    case 'E':
+      field.clearAll();
+      field.setCellString(SolveTest.dataHard);
+      break;
+    case 'R':
+      field.clearAll();
+      field.setCellString(SolveTest.dataPrfs);
+      break;
+    case 'T':
+      field.clearAll();
+      field.setCellString(SolveTest.dataLuna);
+      break;
+    }
 }
